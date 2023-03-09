@@ -1,13 +1,13 @@
 
+mod game_graphic_core;
 
-mod texture;
-mod camera;
-mod model;
-mod resources;
 
-use model::{Vertex,Model};
-use crate::model::DrawModel;
-use camera::*;
+use game_graphic_core::model::*;
+use game_graphic_core::camera::*;
+use game_graphic_core::texture;
+use game_graphic_core::resources;
+
+
 use cgmath::prelude::*;
 use wgpu::util::DeviceExt;
 use winit::{
@@ -16,6 +16,8 @@ use winit::{
     window::WindowBuilder,
     window::Window,
 };
+
+
 
 
 pub async fn run() {
@@ -200,7 +202,7 @@ impl State{
         //シェーダーファイルの読み込み
         let shader = device.create_shader_module(wgpu::ShaderModuleDescriptor{
             label:Some("Shader"),
-            source:wgpu::ShaderSource::Wgsl(include_str!("shader.wgsl").into()),
+            source:wgpu::ShaderSource::Wgsl(include_str!("game_graphic_core/shader.wgsl").into()),
         });
         //テクスチャバインドグループの設定
         let texture_bind_group_layout=
@@ -265,7 +267,7 @@ impl State{
                 module:&shader,
                 entry_point:"vs_main",
                 buffers:&[
-                    model::ModelVertex::desc(),
+                    ModelVertex::desc(),
                     InstanceRaw::desc()
                 ],
             },

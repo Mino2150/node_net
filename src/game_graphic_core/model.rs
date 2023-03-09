@@ -1,6 +1,6 @@
 
 
-use crate::texture::{ self};
+use crate::game_graphic_core::texture::{ self};
 use core::ops::Range;
 
 pub trait Vertex{
